@@ -87,12 +87,12 @@ timeSegment =
         (field "wind" wind)
 
 
-type alias Response =
+type alias Forecast =
     List TimeSegment
 
 
-response : Decoder Response
-response =
+forecast : Decoder Forecast
+forecast =
     field "list" (list timeSegment)
 
 

@@ -1,9 +1,9 @@
 module Fixtures.Types exposing (..)
 
-import Types exposing (..)
+import Types exposing (Forecast)
 
 
-response : Response
+response : Forecast
 response =
     [ { date = 1485799200
       , main =

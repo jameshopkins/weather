@@ -13,7 +13,7 @@ all =
         [ describe "Parsing a Response"
             (equalityTests
                 [ { description = "decodes a response"
-                  , output = (parse Types.response responseJson)
+                  , output = (parse Types.forecast responseJson)
                   , expected = Ok response
                   }
                 ]
