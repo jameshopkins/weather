@@ -4,17 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "http-server"
+    "test": "mocha $(find . -name '*spec.js' -not -path './node_modules/*') --compilers js:babel-register"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "power-assert": "^1.4.2",
+    "sinon": "^1.17.7"
+  },
   "dependencies": {
+    "babel-plugin-transform-async-to-generator": "^6.22.0",
     "express": "^4.14.1",
     "http-server": "^0.9.0",
+    "node-fetch": "^1.6.3",
     "pug": "^2.0.0-beta11"
   },
   "babel": {
-    "plugins": ["transform-es2015-modules-commonjs"]
+    "plugins": [
+      "transform-async-to-generator",
+      "transform-es2015-modules-commonjs"
+    ]
   }
 }

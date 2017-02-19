@@ -36,7 +36,10 @@ run: build-ui $(SHARED_DEPS) $(SERVER_DEPS)
 test-ui: $(UI_DEPS)
 	cd ./ui && yarn test
 
-test: test-ui
+test-server: $(SHARED_DEPS) $(SERVER_DEPS)
+	cd ./server && yarn test
+
+test: test-ui test-server
 
 .PHONY: \
 	build-ui \
@@ -45,3 +48,4 @@ test: test-ui
 	run \
 	test \
 	test-ui \
+	test-server \
