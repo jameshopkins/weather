@@ -19,11 +19,11 @@ main =
         }
 
 
-getWeather : Cmd Message
-getWeather =
+getWeather : String -> Cmd Message
+getWeather query =
     let
         url =
-            "http://localhost:3000/api?location=London"
+            "http://localhost:3000/api?location=" ++ query
     in
         send Receive (get url forecast)
 
@@ -40,7 +40,7 @@ update msg model =
             ( { model | query = str }, Cmd.none )
 
         Fetch ->
-            ( { model | forecast = Loading }, getWeather )
+            ( { model | forecast = Loading }, getWeather model.query )
 
         Receive (Ok forecast) ->
             ( { model | forecast = Success forecast }, Cmd.none )
