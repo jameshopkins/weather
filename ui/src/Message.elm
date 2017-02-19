@@ -6,5 +6,5 @@ import Types exposing (Forecast)
 
 type Message
     = UpdateQuery String
-    | MorePlease
-    | WeatherForecast (Result Error Forecast)
+    | Fetch
+    | Receive (Result Error Forecast)

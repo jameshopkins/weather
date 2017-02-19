@@ -1,17 +1,17 @@
-port module Rounds exposing (..)
+module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http exposing (..)
 import Message exposing (Message(..))
-import Model exposing (Model, emptyModel)
+import Model exposing (Model, Broadcast(..))
 import Types exposing (forecast, Forecast)
 
 
-main : Program (Maybe Model) Model Message
+main : Program Never Model Message
 main =
-    Html.programWithFlags
+    Html.program
         { init = init
         , view = view
         , update = update
@@ -25,12 +25,12 @@ getWeather =
         url =
             "http://localhost:3000/api?location=London"
     in
-        send WeatherForecast (get url forecast)
+        send Receive (get url forecast)
 
 
-init : Maybe Model -> ( Model, Cmd Message )
-init savedModel =
-    Maybe.withDefault emptyModel savedModel ! []
+init : ( Model, Cmd Message )
+init =
+    ( Model "" NotAsked, Cmd.none )
 
 
 update : Message -> Model -> ( Model, Cmd Message )
@@ -39,21 +39,37 @@ update msg model =
         UpdateQuery str ->
             ( { model | query = str }, Cmd.none )
 
-        MorePlease ->
-            ( { model | query = "naughty" }, getWeather )
+        Fetch ->
+            ( { model | forecast = Loading }, getWeather )
 
-        WeatherForecast (Ok fc) ->
-            ( { model | forecast = Just fc }, Cmd.none )
+        Receive (Ok forecast) ->
+            ( { model | forecast = Success forecast }, Cmd.none )
 
-        WeatherForecast (Err _) ->
-            ( model, Cmd.none )
+        Receive (Err _) ->
+            ( { model | forecast = Failure }, Cmd.none )
+
+
+renderForecast : Broadcast -> Html msg
+renderForecast status =
+    case status of
+        NotAsked ->
+            p [] [ Html.text "Waiting for a submission!" ]
+
+        Loading ->
+            p [] [ Html.text "Loadng!" ]
+
+        Failure ->
+            p [] [ Html.text "Whoops! Something went wrong!" ]
+
+        Success forecast ->
+            p [] [ Html.text (toString forecast) ]
 
 
 view : Model -> Html Message
 view model =
     div [ class "name" ]
         [ button
-            [ onClick MorePlease ]
+            [ onClick Fetch ]
             [ Html.text "Naughty" ]
         , input
             [ type_ "text"
@@ -61,4 +77,5 @@ view model =
             ]
             []
         , p [] [ Html.text model.query ]
+        , renderForecast model.forecast
         ]

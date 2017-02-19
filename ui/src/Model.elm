@@ -3,14 +3,14 @@ module Model exposing (..)
 import Types exposing (Forecast)
 
 
+type Broadcast
+    = NotAsked
+    | Loading
+    | Failure
+    | Success Forecast
+
+
 type alias Model =
     { query : String
-    , forecast : Maybe Forecast
-    }
-
-
-emptyModel : Model
-emptyModel =
-    { query = ""
-    , forecast = Nothing
+    , forecast : Broadcast
     }

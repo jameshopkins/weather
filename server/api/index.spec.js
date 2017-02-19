@@ -19,7 +19,7 @@ describe('Server API', () => {
     }
 
     await getWeatherForecast(fetch, 423)(req, res);
-    assert(fetch.calledWith('http://samples.openweathermap.org/data/2.5/forecast?q=Somewhere&appid=423'));
+    assert(fetch.calledWith('http://api.openweathermap.org/data/2.5/forecast?q=Somewhere&appid=423'));
     assert(resSend.calledWith({ some: 'json' }));
   });
 

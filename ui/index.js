@@ -1,3 +1,3 @@
-import { Rounds } from './src/Main';
+import { Main } from './src/Main';
 
-Rounds.fullscreen(null);
+Main.embed(document.getElementById('app'));
