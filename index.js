@@ -1,3 +1,2 @@
-import { Rounds } from './src/Main';
-
-Rounds.fullscreen(null);
+require('babel-register');
+require('./server/index.js');

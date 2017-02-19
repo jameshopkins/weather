@@ -1,6 +1,8 @@
 SHELL:=/bin/bash
-UI_DEPS=./elm-stuff ./node_modules
-TEST_DEPS=./tests/elm-stuff ./node_modules
+UI_DEPS=./ui/elm-stuff ./ui/node_modules
+SERVER_DEPS=./server/node_modules
+SHARED_DEPS=./node_modules
+TEST_DEPS=./ui/tests/elm-stuff ./node_modules
 
 # Check for global dependencies and install them if necessary
 
@@ -10,26 +12,36 @@ check-elm-install:
 check-yarn-install:
 	@type yarn >/dev/null 2>&1 || npm i -g yarn
 
-./node_modules: check-yarn-install
+./ui/node_modules: check-yarn-install
+	cd ./ui && yarn
+
+./ui/tests/elm-stuff: check-elm-install
+	cd ui/tests && elm-package install -y
+
+./ui/elm-stuff: check-elm-install
+	cd ui && elm-package install -y
+
+build-ui: $(SHARED_DEPS) $(UI_DEPS)
+	cd ./ui && yarn build
+
+$(SHARED_DEPS):
 	yarn
 
-./tests/elm-stuff: check-elm-install
-	cd tests && elm-package install -y
+$(SERVER_DEPS): check-yarn-install
+	cd ./server && yarn
 
-./elm-stuff: check-elm-install
-	elm-package	install -y
-
-build: $(UI_DEPS)
-	yarn build && cp src/index.html public
-
-run: build
+run: build-ui $(SHARED_DEPS) $(SERVER_DEPS)
 	yarn start
 
-test: $(TEST_DEPS)
-	yarn test
+test-ui: $(UI_DEPS)
+	cd ./ui && yarn test
+
+test: test-ui
 
 .PHONY: \
+	build-ui \
 	check-elm-install \
 	check-yarn-install \
 	run \
 	test \
+	test-ui \

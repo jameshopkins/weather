@@ -1,0 +1,22 @@
+{
+  "name": "weather-ui",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "elm-test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-loader": "^6.2.10",
+    "elm-test": "^0.18.2",
+    "elm-webpack-loader": "^4.2.0",
+    "webpack": "^2.2.1"
+  },
+  "dependencies": {},
+  "babel": {
+    "plugins": ["transform-es2015-modules-commonjs"]
+  }
+}

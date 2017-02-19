@@ -1,7 +1,9 @@
+const path = require('path');
+
 module.exports = {
   entry: ['./index.js'],
   output: {
-    path: './public',
+    path: './../public',
     filename: 'index.js'
   },
   resolve: {
@@ -14,9 +16,7 @@ module.exports = {
         test: /\.js?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          plugins: ["transform-es2015-modules-commonjs"]
-        }
+        include: path.resolve(__dirname, '../node_modules')
       },
       {
         test: /\.elm$/,
