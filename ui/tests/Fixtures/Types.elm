@@ -5,59 +5,65 @@ import Types exposing (Forecast)
 
 response : Forecast
 response =
-    [ { date = 1485799200
-      , main =
-            { temp = 261.45
-            , tempMin = 259.086
-            , tempMax = 261.45
-            , pressure = 1023.48
-            , seaLevel = 1045.39
-            , grndLevel = 1023.48
-            , humidity = 79
-            , tempKf = 2.37
-            }
-      , weather =
-            [ { id = 800
-              , main = "Clear"
-              , description = "clear sky"
-              , icon = "02n"
-              }
-            ]
-      , clouds =
-            { all = 8
-            }
-      , wind =
-            { speed = 4.77
-            , deg = 232.505
-            }
-      }
-    , { date = 143432432200
-      , main =
-            { temp = 200.45
-            , tempMin = 259.086
-            , tempMax = 261.45
-            , pressure = 113.48
-            , seaLevel = 1045.39
-            , grndLevel = 1023.48
-            , humidity = 80
-            , tempKf = 2.37
-            }
-      , weather =
-            [ { id = 8009
-              , main = "Misty"
-              , description = "It's going to be a misty one!"
-              , icon = "02n"
-              }
-            ]
-      , clouds =
-            { all = 100000
-            }
-      , wind =
-            { speed = 6.77
-            , deg = 290.505
-            }
-      }
-    ]
+    { location =
+        { name = "London"
+        , country = "GB"
+        }
+    , forecast =
+        [ { date = 1485799200
+          , main =
+                { temp = 261.45
+                , tempMin = 259.086
+                , tempMax = 261.45
+                , pressure = 1023.48
+                , seaLevel = 1045.39
+                , grndLevel = 1023.48
+                , humidity = 79
+                , tempKf = 2.37
+                }
+          , weather =
+                [ { id = 800
+                  , main = "Clear"
+                  , description = "clear sky"
+                  , icon = "02n"
+                  }
+                ]
+          , clouds =
+                { all = 8
+                }
+          , wind =
+                { speed = 4.77
+                , deg = 232.505
+                }
+          }
+        , { date = 143432432200
+          , main =
+                { temp = 200.45
+                , tempMin = 259.086
+                , tempMax = 261.45
+                , pressure = 113.48
+                , seaLevel = 1045.39
+                , grndLevel = 1023.48
+                , humidity = 80
+                , tempKf = 2.37
+                }
+          , weather =
+                [ { id = 8009
+                  , main = "Misty"
+                  , description = "It's going to be a misty one!"
+                  , icon = "02n"
+                  }
+                ]
+          , clouds =
+                { all = 100000
+                }
+          , wind =
+                { speed = 6.77
+                , deg = 290.505
+                }
+          }
+        ]
+    }
 
 
 responseJson : String
@@ -67,6 +73,10 @@ responseJson =
   "cod": 200,
   "message": "0.0036",
   "cnt": "40",
+  "city": {
+    "name": "London",
+    "country": "GB"
+  },
   "list": [{
      "dt": 1485799200,
      "main": {

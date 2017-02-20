@@ -87,13 +87,30 @@ timeSegment =
         (field "wind" wind)
 
 
+type alias Location =
+    { name : String
+    , country : String
+    }
+
+
+location : Decoder Location
+location =
+    map2 Location
+        (field "name" string)
+        (field "country" string)
+
+
 type alias Forecast =
-    List TimeSegment
+    { forecast : List TimeSegment
+    , location : Location
+    }
 
 
 forecast : Decoder Forecast
 forecast =
-    field "list" (list timeSegment)
+    map2 Forecast
+        (field "list" (list timeSegment))
+        (field "city" location)
 
 
 parse : Decoder a -> String -> Result String a
