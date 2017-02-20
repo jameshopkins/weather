@@ -1,12 +1,12 @@
 module Main exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import Http exposing (..)
+import Components exposing (layout, query)
 import Message exposing (Message(..))
 import Model exposing (Model, Broadcast(..))
-import Types exposing (forecast, Forecast)
+import Types exposing (forecast, Forecast, Location)
+import Views exposing (manageForecast)
 
 
 main : Program Never Model Message
@@ -49,33 +49,9 @@ update msg model =
             ( { model | forecast = Failure }, Cmd.none )
 
 
-renderForecast : Broadcast -> Html msg
-renderForecast status =
-    case status of
-        NotAsked ->
-            p [] [ Html.text "Waiting for a submission!" ]
-
-        Loading ->
-            p [] [ Html.text "Loadng!" ]
-
-        Failure ->
-            p [] [ Html.text "Whoops! Something went wrong!" ]
-
-        Success forecast ->
-            p [] [ Html.text (toString forecast) ]
-
-
 view : Model -> Html Message
 view model =
-    div [ class "name" ]
-        [ button
-            [ onClick Fetch ]
-            [ Html.text "Naughty" ]
-        , input
-            [ type_ "text"
-            , onInput UpdateQuery
-            ]
-            []
-        , p [] [ Html.text model.query ]
-        , renderForecast model.forecast
+    layout
+        [ query UpdateQuery Fetch model.query
+        , manageForecast model.forecast
         ]
