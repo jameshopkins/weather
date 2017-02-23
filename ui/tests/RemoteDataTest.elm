@@ -13,8 +13,8 @@ all =
     describe "Remote Data"
         [ describe "Response Formatting"
             (equalityTests
-                [ { description = "groups the time segments into "
-                  , output = (Ok (formatResponse response.forecast))
+                [ { description = "groups the time segments into days"
+                  , output = (Ok (formatResponse response))
                   , expected = Ok expect
                   }
                 ]

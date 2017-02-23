@@ -1,13 +1,19 @@
 module Model exposing (..)
 
-import Types exposing (Forecast)
+import Types exposing (Day, Forecast, Location)
+
+
+type alias Foo =
+    { location : Location
+    , forecast : List Day
+    }
 
 
 type Broadcast
     = NotAsked
     | Loading
     | Failure
-    | Success Forecast
+    | Success Foo
 
 
 type alias Model =

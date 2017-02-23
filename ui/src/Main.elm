@@ -7,6 +7,7 @@ import Message exposing (Message(..))
 import Model exposing (Model, Broadcast(..))
 import Types exposing (forecast, Forecast, Location)
 import Views exposing (manageForecast)
+import RemoteData exposing (formatResponse)
 
 
 main : Program Never Model Message
@@ -43,7 +44,7 @@ update msg model =
             ( { model | forecast = Loading }, getWeather model.query )
 
         Receive (Ok forecast) ->
-            ( { model | forecast = Success forecast }, Cmd.none )
+            ( { model | forecast = Success (formatResponse forecast) }, Cmd.none )
 
         Receive (Err _) ->
             ( { model | forecast = Failure }, Cmd.none )

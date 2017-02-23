@@ -1,12 +1,26 @@
 module RemoteData exposing (..)
 
-import Types exposing (Forecast, TimeSegment)
+import Date exposing (Date)
+import Date.Extra.Format exposing (format, isoDateFormat)
+import Date.Extra.Config.Config_en_gb exposing (config)
+import Types exposing (Day, Location, TimeSegment)
+import List.Extra exposing (groupWhile)
 
 
-type alias Formatted =
-    List TimeSegment
+formatIsoDate : Date -> String
+formatIsoDate date =
+    format config isoDateFormat date
 
 
-formatResponse : List TimeSegment -> List (List TimeSegment)
-formatResponse segments =
-    [ segments ]
+isSameDay : Date -> Date -> Bool
+isSameDay x y =
+    (formatIsoDate x) == (formatIsoDate y)
+
+
+formatResponse :
+    { location : Location, forecast : List TimeSegment }
+    -> { location : Location
+       , forecast : List Day
+       }
+formatResponse response =
+    { response | forecast = groupWhile (\x y -> isSameDay x.date y.date) response.forecast }

@@ -6,6 +6,10 @@ import getWeatherForecast from './api';
 
 const app = express();
 
+if (!process.env.OWM_KEY) {
+  throw new Error('The OWM_KEY environment variable not set. Make sure it\'s present before running the app')
+}
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname));
 app.use(express.static(path.join(process.cwd(), 'public')));

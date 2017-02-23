@@ -1,6 +1,13 @@
 module Types exposing (..)
 
 import Json.Decode exposing (..)
+import Date exposing (Date, fromTime)
+import String
+import Time exposing (Time)
+
+
+type alias Day =
+    List TimeSegment
 
 
 type alias Foo =
@@ -69,7 +76,7 @@ wind =
 
 
 type alias TimeSegment =
-    { date : Int
+    { date : Date
     , main : Foo
     , weather : List Weather
     , clouds : Clouds
@@ -77,10 +84,17 @@ type alias TimeSegment =
     }
 
 
+date : Decoder Date.Date
+date =
+    float
+        |> andThen
+            (((*) 1000) >> fromTime >> succeed)
+
+
 timeSegment : Decoder TimeSegment
 timeSegment =
     map5 TimeSegment
-        (field "dt" int)
+        (field "dt" date)
         (field "main" foo)
         (field "weather" (list weather))
         (field "clouds" clouds)

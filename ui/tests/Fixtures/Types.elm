@@ -1,6 +1,7 @@
 module Fixtures.Types exposing (..)
 
 import Types exposing (Forecast)
+import Date exposing (Date, fromTime)
 
 
 response : Forecast
@@ -10,7 +11,7 @@ response =
         , country = "GB"
         }
     , forecast =
-        [ { date = 1485802064
+        [ { date = fromTime 1485755750000
           , main =
                 { temp = 261.45
                 , tempMin = 259.086
@@ -36,7 +37,7 @@ response =
                 , deg = 232.505
                 }
           }
-        , { date = 1485812864
+        , { date = fromTime 1485773750000
           , main =
                 { temp = 200.45
                 , tempMin = 259.086
@@ -62,7 +63,7 @@ response =
                 , deg = 290.505
                 }
           }
-        , { date = 1485841664
+        , { date = fromTime 1485849350000
           , main =
                 { temp = 200.45
                 , tempMin = 259.086
@@ -88,7 +89,7 @@ response =
                 , deg = 290.505
                 }
           }
-        , { date = 1485859664
+        , { date = fromTime 1485867350000
           , main =
                 { temp = 200.45
                 , tempMin = 259.086
@@ -114,7 +115,7 @@ response =
                 , deg = 290.505
                 }
           }
-        , { date = 1485928064
+        , { date = fromTime 1485960950000
           , main =
                 { temp = 200.45
                 , tempMin = 259.086
@@ -156,7 +157,7 @@ responseJson =
     "country": "GB"
   },
   "list": [{
-     "dt": 1485802064,
+     "dt": 1485755750,
      "main": {
        "temp": 261.45,
        "temp_min": 259.086,
@@ -188,7 +189,7 @@ responseJson =
       },
      "dt_txt": "2017-01-30 18:00:00"
   }, {
-     "dt": 1485812864,
+     "dt": 1485773750,
      "main": {
        "temp": 200.45,
        "temp_min": 259.086,
@@ -221,7 +222,7 @@ responseJson =
       },
      "dt_txt": "2017-01-30 20:00:00"
   }, {
-     "dt": 1485841664,
+     "dt": 1485849350,
      "main": {
        "temp": 200.45,
        "temp_min": 259.086,
@@ -254,7 +255,7 @@ responseJson =
       },
      "dt_txt": "2017-01-30 20:00:00"
   }, {
-     "dt": 1485859664,
+     "dt": 1485867350,
      "main": {
        "temp": 200.45,
        "temp_min": 259.086,
@@ -287,7 +288,7 @@ responseJson =
       },
      "dt_txt": "2017-01-30 20:00:00"
   }, {
-     "dt": 1485928064,
+     "dt": 1485960950,
      "main": {
        "temp": 200.45,
        "temp_min": 259.086,
