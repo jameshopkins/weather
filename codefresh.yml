@@ -1,0 +1,16 @@
+version: '1.0'
+steps:
+
+  build_step:
+     title: Build
+     type: build
+     dockerfile: Dockerfile
+     image_name: weather
+     tag: ${{CF_BRANCH}}
+
+  unit_tests:
+    title: Unit Tests
+    image: ${{build_step}}
+    fail_fast: false
+    commands:
+      - make test
