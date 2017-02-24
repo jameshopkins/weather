@@ -5,9 +5,9 @@ import Http exposing (..)
 import Components exposing (layout, query)
 import Message exposing (Message(..))
 import Model exposing (Model, Broadcast(..))
-import Types exposing (forecast, Forecast, Location)
+import Types exposing (Weather, Location)
 import Views exposing (manageForecast)
-import RemoteData exposing (formatResponse)
+import RemoteData exposing (forecast, formatResponse)
 
 
 main : Program Never Model Message
