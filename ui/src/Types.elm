@@ -5,45 +5,19 @@ import Date exposing (Date)
 
 
 type alias Day =
-    List TimeSegment
-
-
-type alias Foo =
-    { temp : Float
-    , tempMin : Float
-    , tempMax : Float
-    , pressure : Float
-    , seaLevel : Float
-    , grndLevel : Float
-    , humidity : Int
-    , tempKf : Float
-    }
-
-
-type alias Weather =
-    { id : Int
-    , main : String
-    , description : String
-    , icon : String
-    }
-
-
-type alias Clouds =
-    { all : Float }
-
-
-type alias Wind =
-    { speed : Float
-    , deg : Float
+    { day : Date
+    , segments : List TimeSegment
     }
 
 
 type alias TimeSegment =
-    { date : Date
-    , main : Foo
-    , weather : List Weather
-    , clouds : Clouds
-    , wind : Wind
+    { time : Date
+    , temp : Float
+    , pressure : Float
+    , humidity : Int
+    , overall : String
+    , description : String
+    , icon : String
     }
 
 
@@ -53,13 +27,7 @@ type alias Location =
     }
 
 
-type alias WeatherForecastFormatted =
+type alias WeatherForecast =
     { forecast : List Day
-    , location : Location
-    }
-
-
-type alias WeatherForecastUnformatted =
-    { forecast : List TimeSegment
     , location : Location
     }

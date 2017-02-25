@@ -1,10 +1,10 @@
 module Message exposing (..)
 
 import Http exposing (Error)
-import Types exposing (WeatherForecastUnformatted)
+import Types exposing (WeatherForecast)
 
 
 type Message
     = UpdateQuery String
     | Fetch
-    | Receive (Result Error WeatherForecastUnformatted)
+    | Receive (Result Error WeatherForecast)

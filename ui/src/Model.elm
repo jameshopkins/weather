@@ -1,13 +1,13 @@
 module Model exposing (..)
 
-import Types exposing (WeatherForecastFormatted)
+import Types exposing (WeatherForecast)
 
 
 type Broadcast
     = NotAsked
     | Loading
     | Failure
-    | Success WeatherForecastFormatted
+    | Success WeatherForecast
 
 
 type alias Model =

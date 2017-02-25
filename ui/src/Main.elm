@@ -5,9 +5,8 @@ import Http exposing (..)
 import Components exposing (layout, query)
 import Message exposing (Message(..))
 import Model exposing (Model, Broadcast(..))
-import Types exposing (Weather, Location)
 import Views exposing (manageForecast)
-import RemoteData exposing (forecast, formatResponse)
+import RemoteData exposing (forecast)
 
 
 main : Program Never Model Message
@@ -44,7 +43,7 @@ update msg model =
             ( { model | forecast = Loading }, getWeather model.query )
 
         Receive (Ok forecast) ->
-            ( { model | forecast = Success (formatResponse forecast) }, Cmd.none )
+            ( { model | forecast = Success forecast }, Cmd.none )
 
         Receive (Err _) ->
             ( { model | forecast = Failure }, Cmd.none )

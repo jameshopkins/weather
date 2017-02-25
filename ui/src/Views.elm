@@ -2,7 +2,7 @@ module Views exposing (manageForecast)
 
 import Html exposing (..)
 import Model exposing (Broadcast(..))
-import Types exposing (Day, Location, WeatherForecastFormatted)
+import Types exposing (Location, WeatherForecast)
 
 
 location : Location -> Html msg
@@ -13,7 +13,7 @@ location location =
         ]
 
 
-forecast : WeatherForecastFormatted -> Html msg
+forecast : WeatherForecast -> Html msg
 forecast forecast =
     div []
         [ location forecast.location
