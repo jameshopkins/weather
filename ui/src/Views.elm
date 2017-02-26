@@ -1,13 +1,16 @@
-module Views exposing (manageForecast)
+module Views exposing (locationSearch, manageForecast)
 
 import Html exposing (..)
 import Html.Attributes exposing (alt, colspan, src)
 import Model exposing (Broadcast(..))
-import Types exposing (Day, Location, TimeSegment, WeatherForecast)
+import RemoteData exposing (City, Day, TimeSegment, WeatherForecast)
+import Flags exposing (Locations)
 import Date exposing (Date)
 import Temperature.Convert exposing (kelvinToCelsius)
 import Date.Extra.Format exposing (format)
 import Date.Extra.Config.Config_en_gb exposing (config)
+import Components exposing (searchQuery, searchResults)
+import String exposing (length)
 
 
 formatDate : String -> Date -> String
@@ -15,8 +18,8 @@ formatDate formatStr date =
     format config formatStr date
 
 
-location : Location -> Html msg
-location location =
+city : City -> Html msg
+city location =
     div []
         [ h1 [] [ Html.text location.name ]
         , p [] [ Html.text location.country ]
@@ -72,8 +75,19 @@ day day =
 forecast : WeatherForecast -> Html msg
 forecast forecast =
     div []
-        [ location forecast.location
+        [ city forecast.location
         , div [] <| List.map day forecast.forecast
+        ]
+
+
+locationSearch : (String -> msg) -> msg -> String -> Locations -> Html msg
+locationSearch updateQuery fetch query locations =
+    div []
+        [ searchQuery updateQuery fetch query
+        , if (>) (length query) 0 then
+            searchResults query locations
+          else
+            div [] [ Html.text "Moo" ]
         ]
 
 
@@ -86,8 +100,8 @@ manageForecast status =
         Loading ->
             p [] [ Html.text "Loading!" ]
 
-        Failure ->
+        HttpFailure ->
             p [] [ Html.text "Whoops! Something went wrong!" ]
 
-        Success fc ->
+        HttpSuccess fc ->
             forecast fc

@@ -1,11 +1,11 @@
 module Fixtures.RemoteData exposing (..)
 
-import Types exposing (Day, Location, TimeSegment)
+import RemoteData exposing (Day, City, TimeSegment)
 import Date exposing (fromTime)
 
 
 expected :
-    { location : Location
+    { location : City
     , forecast :
         List Day
     }

@@ -1,16 +1,17 @@
 module Model exposing (..)
 
-import Types exposing (WeatherForecast)
+import RemoteData exposing (WeatherForecast)
 
 
 type Broadcast
     = NotAsked
     | Loading
-    | Failure
-    | Success WeatherForecast
+    | HttpFailure
+    | HttpSuccess WeatherForecast
 
 
 type alias Model =
     { query : String
     , forecast : Broadcast
+    , locations : String
     }

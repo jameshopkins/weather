@@ -1,7 +1,7 @@
 module Message exposing (..)
 
 import Http exposing (Error)
-import Types exposing (WeatherForecast)
+import RemoteData exposing (WeatherForecast)
 
 
 type Message

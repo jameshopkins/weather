@@ -2,16 +2,18 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Http exposing (..)
-import Components exposing (layout, query)
+import Components exposing (layout)
 import Message exposing (Message(..))
 import Model exposing (Model, Broadcast(..))
-import Views exposing (manageForecast)
+import Views exposing (locationSearch, manageForecast)
 import RemoteData exposing (forecast)
+import Flags exposing (Flags, locations)
+import Json.Decode exposing (decodeString)
 
 
-main : Program Never Model Message
+main : Program Flags Model Message
 main =
-    Html.program
+    Html.programWithFlags
         { init = init
         , view = view
         , update = update
@@ -28,9 +30,9 @@ getWeather query =
         send Receive (get url forecast)
 
 
-init : ( Model, Cmd Message )
-init =
-    ( Model "" NotAsked, Cmd.none )
+init : Flags -> ( Model, Cmd Message )
+init flags =
+    ( Model "" NotAsked flags.locations, Cmd.none )
 
 
 update : Message -> Model -> ( Model, Cmd Message )
@@ -40,18 +42,23 @@ update msg model =
             ( { model | query = str }, Cmd.none )
 
         Fetch ->
-            ( { model | forecast = Loading }, getWeather model.query )
+            ( { model | forecast = Loading, query = "" }, getWeather model.query )
 
         Receive (Ok forecast) ->
-            ( { model | forecast = Success forecast }, Cmd.none )
+            ( { model | forecast = HttpSuccess forecast }, Cmd.none )
 
         Receive (Err _) ->
-            ( { model | forecast = Failure }, Cmd.none )
+            ( { model | forecast = HttpFailure }, Cmd.none )
 
 
 view : Model -> Html Message
 view model =
     layout
-        [ query UpdateQuery Fetch model.query
+        [ case decodeString locations model.locations of
+            Err str ->
+                Html.text "Whoops! Something has gone wrong"
+
+            Ok ls ->
+                locationSearch UpdateQuery Fetch model.query ls
         , manageForecast model.forecast
         ]
