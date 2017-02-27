@@ -80,12 +80,12 @@ forecast forecast =
         ]
 
 
-locationSearch : (String -> msg) -> msg -> String -> Locations -> Html msg
+locationSearch : (String -> msg) -> (String -> msg) -> String -> Locations -> Html msg
 locationSearch updateQuery fetch query locations =
     div []
         [ searchQuery updateQuery fetch query
         , if (>) (length query) 0 then
-            searchResults query locations
+            searchResults locations fetch query
           else
             div [] [ Html.text "Moo" ]
         ]

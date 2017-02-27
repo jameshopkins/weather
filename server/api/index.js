@@ -1,6 +1,16 @@
 import { format, getTime } from "date-fns";
 import nodeFetch from "node-fetch";
-import { compose, groupBy, pick, map, reduceBy, sort, toPairs } from "ramda";
+import {
+  compose,
+  groupBy,
+  pick,
+  map,
+  nth,
+  reduceBy,
+  sort,
+  split,
+  toPairs
+} from "ramda";
 
 export default (
   fetch = nodeFetch,
@@ -8,8 +18,9 @@ export default (
   format = formatResponse
 ) =>
   async (req, res) => {
+    const querystring = compose(nth(1), split("?"))(req.url);
     const response = await fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?q=${req.query.location}&appid=${key}`
+      `http://api.openweathermap.org/data/2.5/forecast?${querystring}&appid=${key}`
     );
 
     if (!response.ok) {

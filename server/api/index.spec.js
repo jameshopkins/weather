@@ -20,7 +20,7 @@ describe("Server API", () => {
           send: resSend
         };
         const req = {
-          query: { location: "Somewhere" }
+          url: "http://www.james.com/?lat=0&lon=2"
         };
         const format = spy(() => ({ some: "formatted-json" }));
 
@@ -29,7 +29,7 @@ describe("Server API", () => {
         // Calls correct endpoint
         assert(
           fetch.calledWith(
-            "http://api.openweathermap.org/data/2.5/forecast?q=Somewhere&appid=423"
+            "http://api.openweathermap.org/data/2.5/forecast?lat=0&lon=2&appid=423"
           )
         );
         // Finishes request/response with correct payload
@@ -47,7 +47,7 @@ describe("Server API", () => {
         sendStatus: resSendStatus
       };
       const req = {
-        query: { location: "Somewhere" }
+        url: "http://www.james.com/?lat=0&lon=2"
       };
 
       await getWeatherForecast(fetch, 423)(req, res);
