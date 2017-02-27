@@ -1,7 +1,7 @@
 module Views exposing (locationSearch, manageForecast)
 
 import Html exposing (..)
-import Html.Attributes exposing (alt, colspan, src)
+import Html.Attributes exposing (alt, class, colspan, src)
 import Model exposing (Broadcast(..))
 import RemoteData exposing (City, Day, TimeSegment, WeatherForecast)
 import Flags exposing (Locations)
@@ -53,7 +53,7 @@ day : Day -> Html msg
 day day =
     div []
         [ h2 [] [ formatDate "%-d/%m/%Y" day.day |> Html.text ]
-        , table []
+        , table [ class "time-segments" ]
             [ thead []
                 [ tr []
                     [ th [] [ Html.text "Time" ]
@@ -74,7 +74,7 @@ day day =
 
 forecast : WeatherForecast -> Html msg
 forecast forecast =
-    div []
+    div [ class "location-forecast" ]
         [ city forecast.location
         , div [] <| List.map day forecast.forecast
         ]
@@ -82,12 +82,12 @@ forecast forecast =
 
 locationSearch : (String -> msg) -> (String -> msg) -> String -> Locations -> Html msg
 locationSearch updateQuery fetch query locations =
-    div []
+    div [ class "search-locations" ]
         [ searchQuery updateQuery fetch query
         , if (>) (length query) 0 then
             searchResults locations fetch query
           else
-            div [] [ Html.text "Moo" ]
+            div [] []
         ]
 
 

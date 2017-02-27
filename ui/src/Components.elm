@@ -10,12 +10,15 @@ import String exposing (contains, toLower)
 
 searchQuery : (String -> msg) -> (String -> msg) -> String -> Html msg
 searchQuery updateQuery fetch query =
-    Html.form [ onSubmit (fetch "Foo") ]
-        [ label [ for "query" ] [ Html.text "City " ]
-        , input [ id "query", onInput updateQuery ] []
-        , span []
-            [ button [ type_ "submit" ] [ Html.text "Get weather" ] ]
-        , p [] [ Html.text query ]
+    div [ class "location-query" ]
+        [ h1 [ class "search-locations-title" ] [ Html.text "Find your weather!" ]
+        , Html.form
+            [ onSubmit (fetch "Foo") ]
+            [ label []
+                [ input [ class "location-query-input", id "query", onInput updateQuery ] []
+                , Html.text "City, country, etc"
+                ]
+            ]
         ]
 
 
@@ -34,4 +37,6 @@ narrowSearch fetch query location =
 
 searchResults : Locations -> (String -> msg) -> String -> Html msg
 searchResults locations fetch query =
-    ul [] <| filterMap (narrowSearch fetch query) locations
+    div [ class "location-results" ]
+        [ ul [] <| filterMap (narrowSearch fetch query) locations
+        ]
