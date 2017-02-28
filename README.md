@@ -4,16 +4,24 @@
 
 ## Getting Started
 
-### Run The Application
+### Setup
 
-Ensure you have a valid OpenWeatherMap API key assigned to the `OWM_KEY` environment variable.
+Both application and tests are executed in a Docker container, whose image needs to be built first.
 
 ```bash
-make run
+docker build -t weather .
+```
+
+### Run The Application
+
+Ensure you have a valid OpenWeatherMap API key assigned to the `OWM_KEY` environment variable, so it's available inside the container.
+
+```bash
+docker run -p 3000:3000 -e "OWM_KEY=YOUR_KEY_HERE" weather make run
 ```
 
 ### Run The Tests
 
 ```bash
-make test
+docker run weather make test
 ```

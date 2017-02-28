@@ -4,39 +4,33 @@ SERVER_DEPS=./server/node_modules
 SHARED_DEPS=./node_modules
 TEST_DEPS=./ui/tests/elm-stuff ./node_modules
 
-# Check for global dependencies and install them if necessary
-
-check-elm-install:
-	@type elm >/dev/null 2>&1 || npm i -g elm@0.18.0
-
-check-yarn-install:
-	@type yarn >/dev/null 2>&1 || npm i -g yarn
-
-./ui/node_modules: check-yarn-install
+./ui/node_modules:
 	cd ./ui && yarn
 
-./ui/tests/elm-stuff: check-elm-install
+./ui/tests/elm-stuff:
 	cd ui/tests && elm-package install -y
 
-./ui/elm-stuff: check-elm-install
+./ui/elm-stuff:
 	cd ui && elm-package install -y
 
-build-ui: $(SHARED_DEPS) $(UI_DEPS)
+build-ui:
 	cd ./ui && yarn build
 
 $(SHARED_DEPS):
 	yarn
 
-$(SERVER_DEPS): check-yarn-install
+$(SERVER_DEPS):
 	cd ./server && yarn
 
-run: build-ui $(SHARED_DEPS) $(SERVER_DEPS)
+run: build-ui
 	yarn start
 
-test-ui: $(UI_DEPS)
+deps: $(SHARED_DEPS) $(SERVER_DEPS) $(UI_DEPS) $(TEST_DEPS)
+
+test-ui:
 	cd ./ui && yarn test
 
-test-server: $(SHARED_DEPS) $(SERVER_DEPS)
+test-server:
 	cd ./server && yarn test
 
 test: test-ui test-server
@@ -46,6 +40,7 @@ test: test-ui test-server
 	check-elm-install \
 	check-yarn-install \
 	run \
+	deps \
 	test \
 	test-ui \
 	test-server \
